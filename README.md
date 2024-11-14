@@ -121,7 +121,6 @@ lib/
   <img src="https://github.com/user-attachments/assets/0b4d212e-f78a-43fd-a2ff-d5aaf569b862" alt="Screenshot 2" width="200">
   <img src="https://github.com/user-attachments/assets/6680a763-7c8c-4e70-98e1-9dae0098e5ce" alt="Screenshot 3" width="200">
   <img src="https://github.com/user-attachments/assets/290870b2-8613-4d66-b58b-13909dd74a6e" alt="Screenshot 4" width="200">
-  <img src="https://github.com/user-attachments/assets/f83c4433-689d-466d-9dfa-7d41420f391e" alt="Screenshot 5" width="200">
 </div>
 
 ---
