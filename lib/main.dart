@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kagi_task/kite_theme.dart';
-import 'package:kagi_task/presentation/tabbed_news_screen.dart';
+import 'package:kagi_task/util/kite_theme.dart';
+import 'package:kagi_task/tabbed_view/presentation/tabbed_news_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
