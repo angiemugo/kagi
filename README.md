@@ -115,13 +115,18 @@ lib/
 
 ## **Demo**
 > Include screenshots or a video link showcasing the app's features.
-![IMG_0451](https://github.com/user-attachments/assets/345595a6-ee6c-479d-b90a-50dd9735ab25)
-![IMG_0452](https://github.com/user-attachments/assets/0b4d212e-f78a-43fd-a2ff-d5aaf569b862)
-![IMG_0453](https://github.com/user-attachments/assets/6680a763-7c8c-4e70-98e1-9dae0098e5ce)
-![IMG_0454](https://github.com/user-attachments/assets/290870b2-8613-4d66-b58b-13909dd74a6e)
-![IMG_0455](https://github.com/user-attachments/assets/f83c4433-689d-466d-9dfa-7d41420f391e)
+
+<div style="display: flex; flex-wrap: nowrap; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/345595a6-ee6c-479d-b90a-50dd9735ab25" alt="Screenshot 1" width="200">
+  <img src="https://github.com/user-attachments/assets/0b4d212e-f78a-43fd-a2ff-d5aaf569b862" alt="Screenshot 2" width="200">
+  <img src="https://github.com/user-attachments/assets/6680a763-7c8c-4e70-98e1-9dae0098e5ce" alt="Screenshot 3" width="200">
+  <img src="https://github.com/user-attachments/assets/290870b2-8613-4d66-b58b-13909dd74a6e" alt="Screenshot 4" width="200">
+  <img src="https://github.com/user-attachments/assets/f83c4433-689d-466d-9dfa-7d41420f391e" alt="Screenshot 5" width="200">
+</div>
 
 ---
+
+This approach uses HTML to create a flex container for the images, ensuring they stay in a single row. You can adjust the `width` attribute to resize the images as needed. The `gap` attribute in the `flex` container controls spacing between the images.
 
 ## **Challenges Addressed**
 - **JSON Parsing**: Efficiently reading and decoding data from a JSON file.
