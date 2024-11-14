@@ -31,34 +31,32 @@ class NewsDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildCategoryRow(context, news: news, l10n: l10n),
-            _buildContentText(
-              context,
-              title: news.title,
-              content: news.shortSummary,
-            ),
+            _buildContentText(context,
+                title: news.title,
+                content: news.shortSummary,
+                style: Theme.of(context).textTheme.bodyMedium),
             _buildImage(context, news: news),
             BulletPointsView(
-              title: l10n.highlights_title,
-              content: news.talkingPoints,
-            ),
+                title: l10n.highlights_title,
+                content: news.talkingPoints,
+                style: Theme.of(context).textTheme.bodyMedium),
             _buildQuoteSection(context, news: news, l10n: l10n),
             PerspectiveView(
               title: l10n.perspectives_title,
               perspectives: news.perspectives,
             ),
-            _buildContentText(
-              context,
-              title: l10n.humanitarian_impact_title,
-              content: news.humanitarianImpact,
-            ),
+            _buildContentText(context,
+                title: l10n.humanitarian_impact_title,
+                content: news.humanitarianImpact,
+                style: Theme.of(context).textTheme.bodyMedium),
             BulletPointsView(
-              title: l10n.scientific_significance_title,
-              content: news.scientificSignificance,
-            ),
+                title: l10n.scientific_significance_title,
+                content: news.scientificSignificance,
+                style: Theme.of(context).textTheme.bodyMedium),
             BulletPointsView(
-              title: l10n.travel_advisory_title,
-              content: news.travelAdvisory,
-            ),
+                title: l10n.travel_advisory_title,
+                content: news.travelAdvisory,
+                style: Theme.of(context).textTheme.bodyMedium),
             TimelineSection(
               title: l10n.timeline_of_events_title,
               timeline: news.timeline,
@@ -68,18 +66,22 @@ class NewsDetailScreen extends StatelessWidget {
               domains: news.domains,
             ),
             _buildCard(
-              content: BulletPointsView(
-                title: l10n.action_items_title,
-                content: news.userActionItems,
-              ),
-              color: actionGreen
-            ),
+                content: BulletPointsView(
+                    title: l10n.action_items_title,
+                    content: news.userActionItems,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black)),
+                color: actionGreen),
             _buildCard(
-              content: _buildContentText(
-                context,
-                title: l10n.did_you_know_title,
-                content: news.didYouKnow,
-              ),
+              content: _buildContentText(context,
+                  title: l10n.did_you_know_title,
+                  content: news.didYouKnow,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: Colors.black)),
               color: actionBlue,
             ),
             _shareNewsButton(context, l10n: l10n, news: news),
@@ -151,27 +153,17 @@ class NewsDetailScreen extends StatelessWidget {
   }
 
   Widget _buildContentText(BuildContext context,
-      {required String title, required String content}) {
+      {required String title,
+      required String content,
+      required TextStyle? style}) {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: Colors.black),
-          ),
+          Text(title, style: style),
           const SizedBox(height: 16),
-          Text(
-            content,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.black),
-          ),
+          Text(content, style: style),
         ],
       ),
     );

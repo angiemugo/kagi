@@ -25,6 +25,9 @@ class Webview extends ConsumerWidget {
     final controller = ref.watch(webViewControllerProvider(link));
 
     return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(),
+      ),
       body: WebViewWidget(controller: controller),
     );
   }

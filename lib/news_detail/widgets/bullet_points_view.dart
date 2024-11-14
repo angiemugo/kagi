@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class BulletPointsView extends StatelessWidget {
   final String title;
   final List<String> content;
+  final TextStyle? style;
 
   const BulletPointsView(
-      {super.key, required this.title, required this.content});
+      {super.key, required this.title, required this.content, required this.style});
+
   @override
   Widget build(BuildContext context) {
     if (content.isEmpty) {
@@ -16,28 +18,19 @@ class BulletPointsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: Colors.black)),
+          Text(title, style: style?.copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           ...content.map(
             (point) => Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: RichText(
                 text: TextSpan(
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(color: Colors.black),
+                  style: style,
                   children: [
                     TextSpan(
                         text: "• ",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(color: Colors.black)),
+                        style: style?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                     TextSpan(
                       text: point,
                     ),

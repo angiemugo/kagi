@@ -1,28 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:kagi_task/news_detail/presentation/page_controller.dart';
 import 'package:transparent_image/transparent_image.dart';
-
-final pageControllerProvider =
-    StateNotifierProvider<PageControllerNotifier, int>((ref) {
-  return PageControllerNotifier();
-});
-
-class PageControllerNotifier extends StateNotifier<int> {
-  final PageController controller = PageController();
-
-  PageControllerNotifier() : super(0);
-
-  void setCurrentPage(int index) {
-    state = index;
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-}
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ImageView extends ConsumerWidget {
   final List<String> images;
@@ -33,7 +13,6 @@ class ImageView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentPage = ref.watch(pageControllerProvider);
-    final pageNotifier = ref.read(pageControllerProvider.notifier);
 
     final decorator = DotsDecorator(
       size: const Size.square(10.0),
@@ -50,7 +29,7 @@ class ImageView extends ConsumerWidget {
         children: [
           Expanded(
             child: PageView.builder(
-              controller: pageNotifier.controller,
+              controller: ref.read(pageControllerProvider.notifier).controller,
               itemCount: images.length,
               itemBuilder: (context, index) {
                 return ClipRRect(
@@ -59,7 +38,8 @@ class ImageView extends ConsumerWidget {
                     placeholder: kTransparentImage,
                     image: images[index],
                     fit: BoxFit.cover,
-                    imageErrorBuilder: (context, error, stackTrace) => Container(
+                    imageErrorBuilder: (context, error, stackTrace) =>
+                        Container(
                       color: Colors.grey.shade300,
                       child: const Center(
                         child: Icon(Icons.error, color: Colors.red, size: 40),
@@ -69,7 +49,7 @@ class ImageView extends ConsumerWidget {
                 );
               },
               onPageChanged: (index) {
-                pageNotifier.setCurrentPage(index);
+                ref.read(pageControllerProvider.notifier).setCurrentPage(index);
               },
             ),
           ),
