@@ -51,7 +51,7 @@ The app uses the **MVVM (Model-View-ViewModel)** architecture to maintain separa
 
 ### Prerequisites
 - Ensure [Flutter](https://docs.flutter.dev/get-started/install) is installed and configured.
-- **Flutter version**: The app was developed and tested using **Flutter 3.10.5**.
+- **Flutter version**: The app was developed and tested using **Flutter 3.24.3**.
 
 ### Steps to Run the Project
 1. Clone the repository:
@@ -124,8 +124,6 @@ lib/
 </div>
 
 ---
-
-This approach uses HTML to create a flex container for the images, ensuring they stay in a single row. You can adjust the `width` attribute to resize the images as needed. The `gap` attribute in the `flex` container controls spacing between the images.
 
 ## **Challenges Addressed**
 - **JSON Parsing**: Efficiently reading and decoding data from a JSON file.
