@@ -1,0 +1,20 @@
+{
+    "@@locale": "en",
+    "news_details_title": "News Details",
+    "highlights_title": "Highlights",
+    "perspectives_title": "Perspectives",
+    "humanitarian_impact_title": "Humanitarian Impact",
+    "scientific_significance_title": "Scientific Significance",
+    "travel_advisory_title": "Travel Advisory",
+    "timeline_of_events_title": "Timeline of Events",
+    "sources_title": "Sources",
+    "action_items_title": "Action Items",
+    "did_you_know_title": "Did you know?",
+    "share_news_button": "Share News",
+    "read_article_button": "Read Article",
+    "sources_count": "{count, plural, =1{1 Source} other{{count} Sources}}",
+    "quote_via": "{quoteAuthor} (via {quoteSourceDomain})",
+    "articles_count": "{count, plural, =1{1 Article} other{{count} Articles}}",
+    "no_data": "No data found", 
+    "error_text": "We experienced an {error}"
+}
