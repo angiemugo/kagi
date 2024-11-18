@@ -56,11 +56,11 @@ The app uses the **MVVM (Model-View-ViewModel)** architecture to maintain separa
 ### Steps to Run the Project
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/kagi-task.git
+   git clone https://github.com/angiemugo/kagi.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd kagi-task
+   cd kagi
    ```
 3. Install dependencies:
    ```bash
