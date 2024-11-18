@@ -135,6 +135,7 @@ lib/
 
 ## **Future Enhancements**
 The app was designed for demonstration purposes. Potential extensions include:
+- Linking the extra options to actual actions 
 - Integrating a live API for real-time news updates.
 - Adding persistent user preferences.
 - Implementing unit and widget tests for improved reliability.
