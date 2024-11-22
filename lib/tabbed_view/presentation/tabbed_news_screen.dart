@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kagi_task/const/images.dart';
 import 'package:kagi_task/tabbed_view/presentation/drawer_view.dart';
+import 'package:kagi_task/tabbed_view/presentation/dropdown_view.dart';
 import 'package:kagi_task/tabbed_view/presentation/news_feed_screen.dart';
 import 'package:kagi_task/tabbed_view/presentation/tabbed_news_controller.dart';
 import '../domain/news_model.dart';
@@ -32,21 +34,65 @@ class TabbedNewsScreen extends ConsumerWidget {
       length: categories.length,
       child: Scaffold(
         appBar: AppBar(
-          titleSpacing: 0,
-          title: Text(timestamp),
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: categories.map((category) => Tab(text: category)).toList(),
-            onTap: (index) => tabController.setTabIndex(index)
+          leading: Builder(
+            builder: (context) => IconButton(
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    kiteIcon,
+                    width: 14,
+                    height: 14,
+                  ),
+                  const Text(
+                    'Kite',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                // Add your action here
+              },
+              icon: const Icon(Icons.settings),
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                height: 40,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: DropdownView(
+                    categories: categories,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
         drawer: DrawerView(sections: drawerSections),
         body: TabBarView(
           children: categories.map((category) {
-            final tabData = category == "All"
+            final selectedCategory = ref.watch(selectedCategoryProvider);
+
+            final tabData = selectedCategory.name == "World"
                 ? newsModel.clusters
-                : tabController.getCategory(category);
-            return NewsFeedScreen(clusters: tabData);
+                : tabController.getCategory(selectedCategory);
+            return NewsFeedScreen(
+              clusters: tabData,
+              date: timestamp,
+              categories: categories,
+            );
           }).toList(),
         ),
       ),

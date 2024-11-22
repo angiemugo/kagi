@@ -2,14 +2,43 @@ import 'package:kagi_task/tabbed_view/data/articles_repository.dart';
 import 'package:kagi_task/tabbed_view/domain/news_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'dart:math';
 
 part 'tabbed_news_controller.g.dart';
 
+class Category {
+  final String name;
+  final Color color;
+
+  Category({required this.name, required this.color});
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Category && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+}
+
 @riverpod
 class TabbedNewsController extends _$TabbedNewsController {
-  Map<String, List<Cluster>> _clusters = {};
-  List<String> _categories = [];
+  Map<Category, List<Cluster>> _clusters = {};
+  List<Category> _categories = [];
   int _currentTabIndex = 0;
+
+  final List<Color> predefinedColors = [
+    Colors.red,
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.purple,
+    Colors.pink,
+    Colors.teal,
+  ];
 
   @override
   Future<NewsModel> build() async {
@@ -23,17 +52,57 @@ class TabbedNewsController extends _$TabbedNewsController {
     }
   }
 
-  Map<String, List<Cluster>> _groupByCategory(NewsModel newsModel) {
-    final Map<String, List<Cluster>> grouped = {};
-    for (var cluster in newsModel.clusters) {
-      grouped.putIfAbsent(cluster.category, () => []).add(cluster);
+  List<Color> availableColors = [];
+
+  Color _getRandomColor() {
+    if (availableColors.isEmpty) {
+      availableColors = List.from(predefinedColors);
     }
-    _categories = ["All", ...grouped.keys];
+
+    Random random = Random();
+    if (availableColors.isNotEmpty) {
+      final color =
+          availableColors.removeAt(random.nextInt(availableColors.length));
+      return color;
+    } else {
+      return Color.fromRGBO(
+        random.nextInt(256),
+        random.nextInt(256),
+        random.nextInt(256),
+        1.0,
+      );
+    }
+  }
+
+  Map<Category, List<Cluster>> _groupByCategory(NewsModel newsModel) {
+    final Map<Category, List<Cluster>> grouped = {};
+
+    for (var cluster in newsModel.clusters) {
+      var category = grouped.keys.firstWhere(
+        (existingCategory) => existingCategory.name == cluster.category,
+        orElse: () =>
+            Category(name: cluster.category, color: _getRandomColor()),
+      );
+
+      if (!grouped.containsKey(category)) {
+        grouped[category] = [];
+      }
+
+      grouped[category]!.add(cluster);
+    }
+
+    _categories = [
+      Category(name: "World", color: Colors.black),
+      ...grouped.keys,
+    ];
+
     return grouped;
   }
 
-  List<Cluster> getCategory(String category) {
-    if (category == "All") return _clusters.values.expand((e) => e).toList();
+  List<Cluster> getCategory(Category category) {
+    if (category.name == "World") {
+      return _clusters.values.expand((e) => e).toList();
+    }
     return _clusters[category] ?? [];
   }
 
@@ -51,12 +120,13 @@ class TabbedNewsController extends _$TabbedNewsController {
 
     return [
       {"title": "General", "data": generalItems},
-      {"title": "More Options", "data": categories}
+      {"title": "More Options", "data": categories.map((c) => c.name).toList()}
     ];
   }
 
   int get currentTabIndex => _currentTabIndex;
-  List<String> get categories => _categories;
+
+  List<Category> get categories => _categories;
 
   void setTabIndex(int index) {
     _currentTabIndex = index;

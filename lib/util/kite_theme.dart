@@ -6,12 +6,6 @@ class KiteTheme {
       useMaterial3: true,
       brightness: Brightness.light,
       unselectedWidgetColor: Colors.grey,
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
-        elevation: 2.0,
-        centerTitle: true,
-      ),
       dividerColor: Colors.grey[400],
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -91,12 +85,6 @@ class KiteTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       unselectedWidgetColor: Colors.grey,
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.white,
-        elevation: 2.0,
-        centerTitle: true,
-      ),
       dividerColor: Colors.grey[700],
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
