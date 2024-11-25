@@ -21,6 +21,7 @@ dependencies:
   build_runner: ^2.4.11
   flutter_riverpod: ^2.3.6
   webview_flutter: ^4.10.0
+  dio: ^5.7.0
 
 dev_dependencies:
   flutter_test:

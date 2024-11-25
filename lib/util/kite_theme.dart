@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kagi_task/const/colors.dart';
+import 'package:kagi_task/util/app_decorations.dart';
 
 class KiteTheme {
   static ThemeData get light {
@@ -7,6 +8,14 @@ class KiteTheme {
       useMaterial3: true,
       brightness: Brightness.light,
       scaffoldBackgroundColor: Colors.white,
+      colorScheme: const ColorScheme.light(
+        primary: Colors.blue,
+        secondary: actionGrey,
+        surface: Colors.grey,
+        onPrimary: Colors.white,
+        onSecondary: Colors.black,
+        onSurface: Colors.black,
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -25,7 +34,7 @@ class KiteTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.blue,
           textStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -79,6 +88,14 @@ class KiteTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       scaffoldBackgroundColor: Colors.black,
+      colorScheme: ColorScheme.dark(
+        primary: Colors.blue,
+        secondary: actionGreyDark,
+        surface: Colors.grey[900] ?? Colors.black,
+        onPrimary: Colors.black,
+        onSecondary: Colors.white,
+        onSurface: Colors.white,
+      ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
@@ -145,37 +162,4 @@ class KiteTheme {
       ),
     );
   }
-}
-
-class AppDecorations extends ThemeExtension<AppDecorations> {
-  final BoxDecoration? quoteBox;
-
-  const AppDecorations({this.quoteBox});
-
-  @override
-  AppDecorations copyWith({BoxDecoration? quoteBox}) {
-    return AppDecorations(quoteBox: quoteBox ?? this.quoteBox);
-  }
-
-  @override
-  AppDecorations lerp(ThemeExtension<AppDecorations>? other, double t) {
-    if (other is! AppDecorations) return this;
-    return AppDecorations(
-      quoteBox: BoxDecoration.lerp(quoteBox, other.quoteBox, t),
-    );
-  }
-
-  static final AppDecorations light = AppDecorations(
-    quoteBox: BoxDecoration(
-      color: quoteBlue,
-      borderRadius: BorderRadius.circular(8),
-    ),
-  );
-
-  static final AppDecorations dark = AppDecorations(
-    quoteBox: BoxDecoration(
-      color: quoteBlue,
-      borderRadius: BorderRadius.circular(8),
-    ),
-  );
 }

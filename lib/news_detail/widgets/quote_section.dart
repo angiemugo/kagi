@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kagi_task/news_detail/widgets/web_button.dart';
 import 'package:kagi_task/tabbed_view/domain/news_model.dart';
-import 'package:kagi_task/util/kite_theme.dart';
+import 'package:kagi_task/util/app_decorations.dart';
 import 'package:kagi_task/util/string_splitter.dart';
 
 class QuoteSectionWidget extends StatelessWidget {

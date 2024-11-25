@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kagi_task/const/colors.dart';
 import 'package:kagi_task/news_detail/widgets/web_button.dart';
 import 'package:kagi_task/tabbed_view/domain/news_model.dart';
+import 'package:kagi_task/util/app_decorations.dart';
 import 'package:kagi_task/util/string_splitter.dart';
-import '../../util/kite_theme.dart';
 
 class PerspectiveView extends StatelessWidget {
   final List<Perspective> perspectives;
@@ -69,10 +68,10 @@ class PerspectiveView extends StatelessWidget {
       width: width,
       constraints: const BoxConstraints(minHeight: 120),
       padding: const EdgeInsets.all(12.0),
-      decoration: decorations?.quoteBox?.copyWith(color: actionGrey),
+      decoration: decorations?.quoteBox?.copyWith(color: Theme.of(context).colorScheme.secondary),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min, 
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             title,

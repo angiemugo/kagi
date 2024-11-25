@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'json_reader.dart';
+part of 'dio_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$jsonReaderHash() => r'ffd321a875351993901121c27ca1c76d1d07c4c7';
+String _$dioProviderHash() => r'3bb934db81f01878ecdc36b339f0174dd1fe4038';
 
-/// See also [jsonReader].
-@ProviderFor(jsonReader)
-final jsonReaderProvider = AutoDisposeProvider<JsonReader>.internal(
-  jsonReader,
-  name: r'jsonReaderProvider',
+/// See also [dioProvider].
+@ProviderFor(dioProvider)
+final dioProviderProvider = AutoDisposeProvider<Dio>.internal(
+  dioProvider,
+  name: r'dioProviderProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$jsonReaderHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$dioProviderHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef JsonReaderRef = AutoDisposeProviderRef<JsonReader>;
+typedef DioProviderRef = AutoDisposeProviderRef<Dio>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

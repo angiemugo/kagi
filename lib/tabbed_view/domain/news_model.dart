@@ -47,7 +47,6 @@ class Cluster {
   final List<String> timeline;
   final String futureOutlook;
   final List<String> keyPlayers;
-  // final String technicalDetails;
   final String businessAngleText;
   final List<String> businessAnglePoints;
   final List<String> userActionItems;
@@ -100,7 +99,6 @@ class Cluster {
     required this.timeline,
     required this.futureOutlook,
     required this.keyPlayers,
-    // required this.technicalDetails,
     required this.businessAngleText,
     required this.businessAnglePoints,
     required this.userActionItems,
@@ -121,59 +119,105 @@ class Cluster {
   });
 
   factory Cluster.fromJson(Map<String, dynamic> json) {
+    T decodeField<T>(String key, T Function() decode) {
+      try {
+        return decode();
+      } catch (e) {
+        print('Error decoding field "$key": $e');
+        rethrow;
+      }
+    }
+
     return Cluster(
-      clusterNumber: json['cluster_number'],
-      uniqueDomains: json['unique_domains'],
-      numberOfTitles: json['number_of_titles'],
-      category: json['category'],
-      title: json['title'],
-      shortSummary: json['short_summary'],
-      didYouKnow: json['did_you_know'],
-      talkingPoints: List<String>.from(json['talking_points']),
-      quote: json['quote'],
-      quoteAuthor: json['quote_author'],
-      quoteSourceUrl: json['quote_source_url'],
-      quoteSourceDomain: json['quote_source_domain'],
-      location: json['location'],
-      perspectives: (json['perspectives'] as List<dynamic>)
-          .map((e) => Perspective.fromJson(e))
-          .toList(),
-      emoji: json['emoji'],
-      geopoliticalContext: json['geopolitical_context'],
-      historicalBackground: json['historical_background'],
-      internationalReactions: json['international_reactions'] is String
-          ? [json['international_reactions']]
-          : List<String>.from(json['international_reactions'] ?? []),
-      humanitarianImpact: json['humanitarian_impact'],
-      economicImplications: json['economic_implications'],
-      timeline: List<String>.from(json['timeline']) is String
-          ? [json['timeline']]
-          : List<String>.from(json['timeline'] ?? []),
-      futureOutlook: json['future_outlook'],
-      keyPlayers: List<String>.from(json['key_players']),
-      // technicalDetails: json['technical_details'],
-      businessAngleText: json['business_angle_text'],
-      businessAnglePoints: List<String>.from(json['business_angle_points']),
-      userActionItems: List<String>.from(json['user_action_items']),
-      scientificSignificance:
-          List<String>.from(json['scientific_significance']),
-      travelAdvisory: List<String>.from(json['travel_advisory']),
-      destinationHighlights: json['destination_highlights'],
-      culinarySignificance: json['culinary_significance'],
-      performanceStatistics: List<String>.from(json['performance_statistics']),
-      leagueStandings: json['league_standings'],
-      diyTips: json['diy_tips'],
-      designPrinciples: json['design_principles'],
-      userExperienceImpact: json['user_experience_impact'],
-      gameplayMechanics: List<String>.from(json['gameplay_mechanics']),
-      industryImpact: List<String>.from(json['industry_impact']),
-      technicalSpecifications: json['technical_specifications'],
-      articles: (json['articles'] as List<dynamic>)
-          .map((e) => Article.fromJson(e))
-          .toList(),
-      domains: (json['domains'] as List<dynamic>)
-          .map((e) => Domain.fromJson(e))
-          .toList(),
+      clusterNumber:
+          decodeField('cluster_number', () => json['cluster_number']),
+      uniqueDomains:
+          decodeField('unique_domains', () => json['unique_domains']),
+      numberOfTitles:
+          decodeField('number_of_titles', () => json['number_of_titles']),
+      category: decodeField('category', () => json['category']),
+      title: decodeField('title', () => json['title']),
+      shortSummary: decodeField('short_summary', () => json['short_summary']),
+      didYouKnow: decodeField('did_you_know', () => json['did_you_know']),
+      talkingPoints: decodeField(
+          'talking_points', () => List<String>.from(json['talking_points'])),
+      quote: decodeField('quote', () => json['quote']),
+      quoteAuthor: decodeField('quote_author', () => json['quote_author']),
+      quoteSourceUrl:
+          decodeField('quote_source_url', () => json['quote_source_url']),
+      quoteSourceDomain:
+          decodeField('quote_source_domain', () => json['quote_source_domain']),
+      location: decodeField('location', () => json['location']),
+      perspectives: decodeField(
+          'perspectives',
+          () => (json['perspectives'] as List<dynamic>)
+              .map((e) => Perspective.fromJson(e))
+              .toList()),
+      emoji: decodeField('emoji', () => json['emoji']),
+      geopoliticalContext: decodeField(
+          'geopolitical_context', () => json['geopolitical_context']),
+      historicalBackground: decodeField(
+          'historical_background', () => json['historical_background']),
+      internationalReactions: decodeField(
+          'international_reactions',
+          () => json['international_reactions'] is String
+              ? []
+              : List<String>.from(json['international_reactions'] ?? [])),
+      humanitarianImpact:
+          decodeField('humanitarian_impact', () => json['humanitarian_impact']),
+      economicImplications: decodeField(
+          'economic_implications', () => json['economic_implications']),
+      timeline: decodeField(
+          'timeline',
+          () => json['timeline'] is String
+              ? []
+              : List<String>.from(json['timeline'] ?? [])),
+      futureOutlook:
+          decodeField('future_outlook', () => json['future_outlook']),
+      keyPlayers: decodeField(
+          'key_players', () => List<String>.from(json['key_players'] ?? [])),
+      businessAngleText:
+          decodeField('business_angle_text', () => json['business_angle_text']),
+      businessAnglePoints: decodeField('business_angle_points',
+          () => List<String>.from(json['business_angle_points'] ?? [])),
+      userActionItems: decodeField(
+          'user_action_items',
+          () => json['user_action_items'] is String
+              ? []
+              : List<String>.from(json['user_action_items'] ?? [])),
+      scientificSignificance: decodeField('scientific_significance',
+          () => List<String>.from(json['scientific_significance'] ?? [])),
+      travelAdvisory: decodeField('travel_advisory',
+          () => List<String>.from(json['travel_advisory'] ?? [])),
+      destinationHighlights: decodeField(
+          'destination_highlights', () => json['destination_highlights']),
+      culinarySignificance: decodeField(
+          'culinary_significance', () => json['culinary_significance']),
+      performanceStatistics: decodeField('performance_statistics',
+          () => List<String>.from(json['performance_statistics'] ?? [])),
+      leagueStandings:
+          decodeField('league_standings', () => json['league_standings']),
+      diyTips: decodeField('diy_tips', () => json['diy_tips']),
+      designPrinciples:
+          decodeField('design_principles', () => json['design_principles']),
+      userExperienceImpact: decodeField(
+          'user_experience_impact', () => json['user_experience_impact']),
+      gameplayMechanics: decodeField('gameplay_mechanics',
+          () => List<String>.from(json['gameplay_mechanics'] ?? [])),
+      industryImpact: decodeField('industry_impact',
+          () => List<String>.from(json['industry_impact'] ?? [])),
+      technicalSpecifications: decodeField(
+          'technical_specifications', () => json['technical_specifications']),
+      articles: decodeField(
+          'articles',
+          () => (json['articles'] as List<dynamic>)
+              .map((e) => Article.fromJson(e))
+              .toList()),
+      domains: decodeField(
+          'domains',
+          () => (json['domains'] as List<dynamic>)
+              .map((e) => Domain.fromJson(e))
+              .toList()),
     );
   }
 }

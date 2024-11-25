@@ -13,7 +13,7 @@ class InternationalReactionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: Column(
@@ -50,7 +50,7 @@ class InternationalReactionsView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(

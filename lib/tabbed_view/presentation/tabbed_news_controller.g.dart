@@ -7,7 +7,7 @@ part of 'tabbed_news_controller.dart';
 // **************************************************************************
 
 String _$tabbedNewsControllerHash() =>
-    r'6d514510898f8ef16078462402f2f33f4c3a93a7';
+    r'18b9c0aef0c3d1a8422330ab33a3be676d75efa9';
 
 /// See also [TabbedNewsController].
 @ProviderFor(TabbedNewsController)

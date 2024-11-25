@@ -41,6 +41,7 @@ class NewsDetailScreen extends ConsumerWidget {
             _buildTitleRow(ref, context, news: news, l10n: l10n),
             _buildContentText(
               context,
+              Theme.of(context).textTheme.bodyMedium,
               title: news.title,
               content: news.shortSummary,
             ),
@@ -121,11 +122,8 @@ class NewsDetailScreen extends ConsumerWidget {
         placeholder: kTransparentImage,
         image: url,
         fit: BoxFit.cover,
-        imageErrorBuilder: (context, error, stackTrace) => Container(
-          color: Colors.grey.shade300,
-          child: const Center(
-            child: Icon(Icons.error, color: Colors.red, size: 40),
-          ),
+        imageErrorBuilder: (context, error, stackTrace) => const Center(
+          child: Icon(Icons.error, color: Colors.red, size: 40),
         ),
       ),
     );
@@ -133,13 +131,16 @@ class NewsDetailScreen extends ConsumerWidget {
 
   Widget _buildScrollableItems(BuildContext context,
       {required List<String> images}) {
-    return ScrollablePageView(
-      views: images.map(_buildImageView).toList(),
-      location: news.location,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: ScrollablePageView(
+        views: images.map(_buildImageView).toList(),
+        location: news.location,
+      ),
     );
   }
 
-  Widget _buildContentText(BuildContext context,
+  Widget _buildContentText(BuildContext context, TextStyle? style,
       {required String title, required String content}) {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
@@ -148,15 +149,12 @@ class NewsDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: style?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
             content,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: style,
           ),
         ],
       ),
@@ -170,12 +168,14 @@ class NewsDetailScreen extends ConsumerWidget {
         if (news.geopoliticalContext.isNotEmpty)
           _buildContentText(
             context,
+            Theme.of(context).textTheme.bodyMedium,
             title: l10n.geopolitical_context_title,
             content: news.geopoliticalContext,
           ),
         if (news.historicalBackground.isNotEmpty)
           _buildContentText(
             context,
+            Theme.of(context).textTheme.bodyMedium,
             title: l10n.historical_background_title,
             content: news.historicalBackground,
           ),
@@ -184,12 +184,14 @@ class NewsDetailScreen extends ConsumerWidget {
         if (news.economicImplications.isNotEmpty)
           _buildContentText(
             context,
+            Theme.of(context).textTheme.bodyMedium,
             title: l10n.economic_implications_title,
             content: news.economicImplications,
           ),
         if (news.humanitarianImpact.isNotEmpty)
           _buildContentText(
             context,
+            Theme.of(context).textTheme.bodyMedium,
             title: l10n.humanitarian_impact_title,
             content: news.humanitarianImpact,
           ),
@@ -217,6 +219,7 @@ class NewsDetailScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: _buildContentText(
           context,
+          Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black),
           title: l10n.did_you_know_title,
           content: news.didYouKnow,
         ),
