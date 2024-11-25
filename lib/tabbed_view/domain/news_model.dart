@@ -37,13 +37,32 @@ class Cluster {
   final String quoteSourceUrl;
   final String quoteSourceDomain;
   final String location;
-  final List<String> scientificSignificance;
-  final List<String> travelAdvisory;
   final List<Perspective> perspectives;
   final String emoji;
+  final String geopoliticalContext;
+  final String historicalBackground;
+  final List<String> internationalReactions;
   final String humanitarianImpact;
+  final String economicImplications;
   final List<String> timeline;
+  final String futureOutlook;
+  final List<String> keyPlayers;
+  // final String technicalDetails;
+  final String businessAngleText;
+  final List<String> businessAnglePoints;
   final List<String> userActionItems;
+  final List<String> scientificSignificance;
+  final List<String> travelAdvisory;
+  final String destinationHighlights;
+  final String culinarySignificance;
+  final List<String> performanceStatistics;
+  final String leagueStandings;
+  final String diyTips;
+  final String designPrinciples;
+  final String userExperienceImpact;
+  final List<String> gameplayMechanics;
+  final List<String> industryImpact;
+  final String technicalSpecifications;
   final List<Article> articles;
   final List<Domain> domains;
 
@@ -57,29 +76,49 @@ class Cluster {
     return images;
   }
 
-  Cluster(
-      {required this.clusterNumber,
-      required this.uniqueDomains,
-      required this.numberOfTitles,
-      required this.category,
-      required this.title,
-      required this.shortSummary,
-      required this.didYouKnow,
-      required this.talkingPoints,
-      required this.quote,
-      required this.quoteAuthor,
-      required this.quoteSourceUrl,
-      required this.quoteSourceDomain,
-      required this.location,
-      required this.perspectives,
-      required this.emoji,
-      required this.humanitarianImpact,
-      required this.timeline,
-      required this.travelAdvisory,
-      required this.scientificSignificance,
-      required this.userActionItems,
-      required this.articles,
-      required this.domains});
+  Cluster({
+    required this.clusterNumber,
+    required this.uniqueDomains,
+    required this.numberOfTitles,
+    required this.category,
+    required this.title,
+    required this.shortSummary,
+    required this.didYouKnow,
+    required this.talkingPoints,
+    required this.quote,
+    required this.quoteAuthor,
+    required this.quoteSourceUrl,
+    required this.quoteSourceDomain,
+    required this.location,
+    required this.perspectives,
+    required this.emoji,
+    required this.geopoliticalContext,
+    required this.historicalBackground,
+    required this.internationalReactions,
+    required this.humanitarianImpact,
+    required this.economicImplications,
+    required this.timeline,
+    required this.futureOutlook,
+    required this.keyPlayers,
+    // required this.technicalDetails,
+    required this.businessAngleText,
+    required this.businessAnglePoints,
+    required this.userActionItems,
+    required this.scientificSignificance,
+    required this.travelAdvisory,
+    required this.destinationHighlights,
+    required this.culinarySignificance,
+    required this.performanceStatistics,
+    required this.leagueStandings,
+    required this.diyTips,
+    required this.designPrinciples,
+    required this.userExperienceImpact,
+    required this.gameplayMechanics,
+    required this.industryImpact,
+    required this.technicalSpecifications,
+    required this.articles,
+    required this.domains,
+  });
 
   factory Cluster.fromJson(Map<String, dynamic> json) {
     return Cluster(
@@ -100,12 +139,35 @@ class Cluster {
           .map((e) => Perspective.fromJson(e))
           .toList(),
       emoji: json['emoji'],
+      geopoliticalContext: json['geopolitical_context'],
+      historicalBackground: json['historical_background'],
+      internationalReactions: json['international_reactions'] is String
+          ? [json['international_reactions']]
+          : List<String>.from(json['international_reactions'] ?? []),
       humanitarianImpact: json['humanitarian_impact'],
-      timeline: List<String>.from(json['timeline']),
-      travelAdvisory: List<String>.from(json["travel_advisory"]),
+      economicImplications: json['economic_implications'],
+      timeline: List<String>.from(json['timeline']) is String
+          ? [json['timeline']]
+          : List<String>.from(json['timeline'] ?? []),
+      futureOutlook: json['future_outlook'],
+      keyPlayers: List<String>.from(json['key_players']),
+      // technicalDetails: json['technical_details'],
+      businessAngleText: json['business_angle_text'],
+      businessAnglePoints: List<String>.from(json['business_angle_points']),
+      userActionItems: List<String>.from(json['user_action_items']),
       scientificSignificance:
           List<String>.from(json['scientific_significance']),
-      userActionItems: List<String>.from(json['user_action_items']),
+      travelAdvisory: List<String>.from(json['travel_advisory']),
+      destinationHighlights: json['destination_highlights'],
+      culinarySignificance: json['culinary_significance'],
+      performanceStatistics: List<String>.from(json['performance_statistics']),
+      leagueStandings: json['league_standings'],
+      diyTips: json['diy_tips'],
+      designPrinciples: json['design_principles'],
+      userExperienceImpact: json['user_experience_impact'],
+      gameplayMechanics: List<String>.from(json['gameplay_mechanics']),
+      industryImpact: List<String>.from(json['industry_impact']),
+      technicalSpecifications: json['technical_specifications'],
       articles: (json['articles'] as List<dynamic>)
           .map((e) => Article.fromJson(e))
           .toList(),

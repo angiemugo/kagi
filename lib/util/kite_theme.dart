@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:kagi_task/const/colors.dart';
 
 class KiteTheme {
   static ThemeData get light {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        titleTextStyle: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+      ),
       unselectedWidgetColor: Colors.grey,
       dividerColor: Colors.grey[400],
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -27,10 +42,7 @@ class KiteTheme {
           ),
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           textStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: Colors.white
-          ),
+              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -39,25 +51,7 @@ class KiteTheme {
       iconTheme: const IconThemeData(
         color: Colors.black,
       ),
-      extensions: [
-        AppDecorations(
-          quoteBox: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16.0),
-            border: Border.all(
-              color: Colors.grey[300]!,
-              width: 1.0,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                blurRadius: 8.0,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-        ),
-      ],
+      extensions: [AppDecorations.light],
       textTheme: TextTheme(
         headlineLarge: const TextStyle(
           fontSize: 24,
@@ -84,12 +78,26 @@ class KiteTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      scaffoldBackgroundColor: Colors.black, // Background of views in dark mode
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.black, // Dark app bar background
+        foregroundColor: Colors.white, // White text and icons
+        elevation: 0, // Optional: Removes shadow for a cleaner look
+        titleTextStyle: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.white, // Ensures title matches the app bar color
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white, // Ensures icons match the app bar
+        ),
+      ),
       unselectedWidgetColor: Colors.grey,
       dividerColor: Colors.grey[700],
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
           foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
           textStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -106,9 +114,7 @@ class KiteTheme {
           ),
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           textStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -117,25 +123,7 @@ class KiteTheme {
       iconTheme: const IconThemeData(
         color: Colors.white,
       ),
-      extensions: [
-        AppDecorations(
-          quoteBox: BoxDecoration(
-            color: Colors.grey[850],
-            borderRadius: BorderRadius.circular(16.0),
-            border: Border.all(
-              color: Colors.grey[700]!,
-              width: 1.0,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 8.0,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-        ),
-      ],
+      extensions: [AppDecorations.dark],
       textTheme: TextTheme(
         headlineLarge: const TextStyle(
           fontSize: 24,
@@ -152,7 +140,7 @@ class KiteTheme {
         labelMedium: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.normal,
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
     );
@@ -176,4 +164,18 @@ class AppDecorations extends ThemeExtension<AppDecorations> {
       quoteBox: BoxDecoration.lerp(quoteBox, other.quoteBox, t),
     );
   }
+
+  static final AppDecorations light = AppDecorations(
+    quoteBox: BoxDecoration(
+      color: quoteBlue, 
+      borderRadius: BorderRadius.circular(8), 
+    ),
+  );
+
+  static final AppDecorations dark = AppDecorations(
+    quoteBox: BoxDecoration(
+      color: quoteBlue, 
+      borderRadius: BorderRadius.circular(8),
+    ),
+  );
 }

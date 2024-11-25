@@ -13,8 +13,14 @@
     "share_news_button": "Share News",
     "read_article_button": "Read Article",
     "sources_count": "{count, plural, =1{1 Source} other{{count} Sources}}",
-    "quote_via": "{quoteAuthor} (via {quoteSourceDomain})",
     "articles_count": "{count, plural, =1{1 Article} other{{count} Articles}}",
-    "no_data": "No data found", 
-    "error_text": "We experienced an {error}"
+    "no_data": "No data found",
+    "error_text": "We experienced an {error}",
+    "geopolitical_context_title": "Geopolitical Context",
+    "historical_background_title": "Historical Background",
+    "economic_implications_title": "Economic Implications",
+    "future_outlook_title": "Future Outlook",
+    "international_title": "International Reactions",
+    "show_all": "Show All", 
+    "show_less": "Show Less"
 }

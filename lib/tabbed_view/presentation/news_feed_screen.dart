@@ -127,7 +127,9 @@ class NewsFeedScreen extends StatelessWidget {
                 color: Colors.grey[500],
               ),
             ),
-            const SizedBox(width: 12,),
+            const SizedBox(
+              width: 12,
+            ),
             InkWell(
               onTap: () => print("typed"),
               child: Icon(

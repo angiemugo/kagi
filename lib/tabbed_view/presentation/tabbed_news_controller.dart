@@ -116,11 +116,11 @@ class TabbedNewsController extends _$TabbedNewsController {
   }
 
   List<Map<String, dynamic>> getDrawerSections(NewsModel newsModel) {
-    final generalItems = ["Account", "Settings", "Interest", "Preferences"];
+    final generalItems = ["Account", "Settings", "Interest", "Order"];
 
     return [
       {"title": "General", "data": generalItems},
-      {"title": "More Options", "data": categories.map((c) => c.name).toList()}
+      {"title": "", "data": categories.map((c) => c.name).toList()}
     ];
   }
 

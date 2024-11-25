@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:kagi_task/news_detail/presentation/page_controller.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ImageView extends ConsumerWidget {
-  final List<String> images;
+class ScrollablePageView extends ConsumerWidget {
+  final List<Widget> views;
   final String location;
 
-  const ImageView({super.key, required this.images, required this.location});
+  const ScrollablePageView(
+      {super.key, required this.views, required this.location});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,23 +30,9 @@ class ImageView extends ConsumerWidget {
           Expanded(
             child: PageView.builder(
               controller: ref.read(pageControllerProvider.notifier).controller,
-              itemCount: images.length,
+              itemCount: views.length,
               itemBuilder: (context, index) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: images[index],
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (context, error, stackTrace) =>
-                        Container(
-                      color: Colors.grey.shade300,
-                      child: const Center(
-                        child: Icon(Icons.error, color: Colors.red, size: 40),
-                      ),
-                    ),
-                  ),
-                );
+                return views[index];
               },
               onPageChanged: (index) {
                 ref.read(pageControllerProvider.notifier).setCurrentPage(index);
@@ -55,7 +41,7 @@ class ImageView extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
           DotsIndicator(
-            dotsCount: images.length,
+            dotsCount: views.length,
             position: currentPage,
             axis: Axis.horizontal,
             decorator: decorator,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kagi_task/const/colors.dart';
+import 'package:kagi_task/news_detail/widgets/web_button.dart';
 import 'package:kagi_task/tabbed_view/domain/news_model.dart';
+import 'package:kagi_task/util/string_splitter.dart';
 import '../../util/kite_theme.dart';
 
 class PerspectiveView extends StatelessWidget {
@@ -16,6 +19,10 @@ class PerspectiveView extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.5;
+
+    if (perspectives.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
@@ -37,14 +44,22 @@ class PerspectiveView extends StatelessWidget {
               itemCount: perspectives.length,
               itemBuilder: (context, index) {
                 final perspective = perspectives[index];
-                final perspectiveText = splitText(perspective.text);
+                final perspectiveText = perspective.text.splitOrExtract();
+
                 return Padding(
-                    padding: EdgeInsets.only(
-                        left: index == 0 ? 0.0 : 8.0, right: 8.0, bottom: 8.0),
-                    child: _buildPerspectiveCard(context,
-                        title: perspectiveText["title"] ?? "",
-                        description: perspectiveText["description"] ?? "",
-                        width: cardWidth));
+                  padding: EdgeInsets.only(
+                    left: index == 0 ? 0.0 : 8.0,
+                    right: 8.0,
+                    bottom: 8.0,
+                  ),
+                  child: _buildPerspectiveCard(
+                    context,
+                    title: perspectiveText?["title"] ?? "",
+                    description: perspectiveText?["content"] ?? "",
+                    width: cardWidth,
+                    domains: perspective.sources,
+                  ),
+                );
               },
             ),
           ),
@@ -58,13 +73,14 @@ class PerspectiveView extends StatelessWidget {
     required String title,
     required String description,
     required double width,
+    required List<Source> domains,
   }) {
     final decorations = Theme.of(context).extension<AppDecorations>();
 
     return Container(
       width: width,
       padding: const EdgeInsets.all(12.0),
-      decoration: decorations?.quoteBox,
+      decoration: decorations?.quoteBox?.copyWith(color: actionGrey),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -74,7 +90,6 @@ class PerspectiveView extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontWeight: FontWeight.w900,
-              fontSize: 14,
             ).copyWith(
               fontSize: title.length > 20 ? 12 : 14,
               letterSpacing: title.length > 20 ? -0.5 : 0,
@@ -83,25 +98,22 @@ class PerspectiveView extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             description,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 8),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: domains.map((url) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 4.0),
+                child: WebButton(url: url.name),
+              );
+            }).toList(),
           ),
         ],
       ),
     );
-  }
-
-  Map<String, String> splitText(String text) {
-    final parts = text.split(':');
-
-    if (parts.length >= 2) {
-      return {
-        'title': parts[0].trim(),
-        'description': parts.sublist(1).join(':').trim(),
-      };
-    }
-
-    return {
-      'title': '',
-      'description': '',
-    };
   }
 }
