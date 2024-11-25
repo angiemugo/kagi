@@ -74,11 +74,11 @@ class NewsFeedScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildTileTitle(context, cluster: cluster),
+        const SizedBox(height: 8.0,),
         Text(
           cluster.title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                fontWeight: FontWeight.bold, fontSize: 16),
         ),
       ],
     );

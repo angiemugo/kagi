@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:kagi_task/const/colors.dart';
 import 'package:kagi_task/news_detail/widgets/webview.dart';
 
 class WebButton extends StatelessWidget {
   final String url;
-  const WebButton({super.key, required this.url});
+  final String? favIcon; // URL for favicon (optional)
+
+  const WebButton({
+    super.key,
+    required this.url,
+    this.favIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +26,36 @@ class WebButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.language,
-              color: linkBlue,
-              size: 14,
-            ),
+            if (favIcon != null)
+              ClipOval(
+                child: Image.network(
+                  favIcon!,
+                  width: 14,
+                  height: 14,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.language,
+                    color: Colors.blue,
+                    size: 14,
+                  ), // Fallback icon if favicon fails to load
+                ),
+              )
+            else
+              const Icon(
+                Icons.language,
+                color: Colors.blue,
+                size: 14,
+              ),
             const SizedBox(width: 4),
-            Text(
-              url,
-              style: const TextStyle(color: linkBlue, fontSize: 12),
+            Flexible(
+              child: Text(
+                url,
+                style: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 12,
+                ),
+                overflow: TextOverflow.ellipsis, // Handle long URLs gracefully
+              ),
             ),
           ],
         ),

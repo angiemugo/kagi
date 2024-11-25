@@ -78,18 +78,18 @@ class KiteTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: Colors.black, // Background of views in dark mode
+      scaffoldBackgroundColor: Colors.black,
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.black, // Dark app bar background
-        foregroundColor: Colors.white, // White text and icons
-        elevation: 0, // Optional: Removes shadow for a cleaner look
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        elevation: 0,
         titleTextStyle: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Colors.white, // Ensures title matches the app bar color
+          color: Colors.white,
         ),
         iconTheme: IconThemeData(
-          color: Colors.white, // Ensures icons match the app bar
+          color: Colors.white,
         ),
       ),
       unselectedWidgetColor: Colors.grey,
@@ -167,14 +167,14 @@ class AppDecorations extends ThemeExtension<AppDecorations> {
 
   static final AppDecorations light = AppDecorations(
     quoteBox: BoxDecoration(
-      color: quoteBlue, 
-      borderRadius: BorderRadius.circular(8), 
+      color: quoteBlue,
+      borderRadius: BorderRadius.circular(8),
     ),
   );
 
   static final AppDecorations dark = AppDecorations(
     quoteBox: BoxDecoration(
-      color: quoteBlue, 
+      color: quoteBlue,
       borderRadius: BorderRadius.circular(8),
     ),
   );

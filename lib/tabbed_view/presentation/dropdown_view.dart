@@ -18,7 +18,7 @@ class DropdownView extends ConsumerWidget {
       height: 50,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: Colors.grey[900],
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -40,11 +40,9 @@ class DropdownView extends ConsumerWidget {
             ),
           ),
           Flexible(
-            flex: 2,
             child: Container(
               height: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(

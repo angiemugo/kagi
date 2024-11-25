@@ -13,11 +13,7 @@ class InternationalReactionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
-    if (reactions.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
+    
     return Padding(
         padding: const EdgeInsets.only(top: 16.0),
         child: Column(

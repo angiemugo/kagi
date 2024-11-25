@@ -39,33 +39,37 @@ class _SourcesViewState extends State<SourcesView> {
               ),
               if (widget.domains.length > 8)
                 TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                      });
-                    },
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          _isExpanded ? l10n.show_less : l10n.show_all,
-                        ),
-                        Icon(_isExpanded
-                            ? Icons.expand_less
-                            : Icons.expand_more),
-                      ],
-                    )),
+                  onPressed: () {
+                    setState(() {
+                      _isExpanded = !_isExpanded;
+                    });
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.black,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        _isExpanded ? l10n.show_less : l10n.show_all,
+                      ),
+                      Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
         Wrap(
           spacing: 8.0,
           runSpacing: 8.0,
-          children: displayedDomains.map((entry) {
-            return WebButton(url: entry.name);
-          }).toList(),
+          children: displayedDomains.map(
+            (entry) {
+              return WebButton(
+                url: entry.name,
+                favIcon: entry.favIcon,
+              );
+            },
+          ).toList(),
         ),
       ],
     );

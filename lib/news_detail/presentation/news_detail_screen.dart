@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kagi_task/const/colors.dart';
+import 'package:kagi_task/tabbed_view/presentation/tabbed_news_controller.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:kagi_task/news_detail/widgets/highlights_view.dart';
 import 'package:kagi_task/news_detail/widgets/international_reactions.dart';
 import 'package:kagi_task/news_detail/widgets/quote_section.dart';
@@ -9,11 +10,9 @@ import 'package:kagi_task/news_detail/widgets/bullet_points_view.dart';
 import 'package:kagi_task/news_detail/widgets/scrollable_page_view.dart';
 import 'package:kagi_task/news_detail/widgets/sources_view.dart';
 import 'package:kagi_task/tabbed_view/domain/news_model.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/timeline_section.dart';
 import '../widgets/perspective_view.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kagi_task/tabbed_view/presentation/tabbed_news_controller.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class NewsDetailScreen extends ConsumerWidget {
@@ -29,7 +28,10 @@ class NewsDetailScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: Text(news.category),
+        title: Text(
+          news.category,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -37,53 +39,40 @@ class NewsDetailScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTitleRow(ref, context, news: news, l10n: l10n),
-            _buildContentText(context,
-                title: news.title, content: news.shortSummary),
+            _buildContentText(
+              context,
+              title: news.title,
+              content: news.shortSummary,
+            ),
             if (images.isNotEmpty)
               _buildScrollableItems(context, images: images),
-            HighlightsView(
-              title: l10n.highlights_title,
-              content: news.talkingPoints,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            if (news.talkingPoints.isNotEmpty)
+              HighlightsView(
+                title: l10n.highlights_title,
+                content: news.talkingPoints,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             if (news.quote.isNotEmpty) QuoteSectionWidget(news: news),
-            const SizedBox(
-              height: 16,
-            ),
-            if (images.length < 2) _buildImageView(images.last),
-            PerspectiveView(
-              title: l10n.perspectives_title,
-              perspectives: news.perspectives,
-            ),
-            _buildContentText(context,
-                title: l10n.geopolitical_context_title,
-                content: news.geopoliticalContext),
-            _buildContentText(context,
-                title: l10n.historical_background_title,
-                content: news.historicalBackground),
-            InternationalReactionsView(reactions: news.internationalReactions),
-            _buildContentText(context,
-                title: l10n.economic_implications_title,
-                content: news.economicImplications),
-            _buildContentText(context,
-                title: l10n.humanitarian_impact_title,
-                content: news.humanitarianImpact),
-            BulletPointsView(
-              title: l10n.scientific_significance_title,
-              content: news.scientificSignificance,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            BulletPointsView(
-              title: l10n.travel_advisory_title,
-              content: news.travelAdvisory,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            TimelineSection(
-                title: l10n.timeline_of_events_title, timeline: news.timeline),
-            SourcesView(title: l10n.sources_title, domains: news.domains),
-            _buildContentText(context,
-                title: l10n.future_outlook_title, content: news.futureOutlook),
-            _buildActionCards(l10n, context),
+            if (images.length == 1) _buildImageView(images.first),
+            if (news.perspectives.isNotEmpty)
+              PerspectiveView(
+                title: l10n.perspectives_title,
+                perspectives: news.perspectives,
+              ),
+            _buildContextSections(context, l10n),
+            if (news.timeline.isNotEmpty)
+              TimelineSection(
+                title: l10n.timeline_of_events_title,
+                timeline: news.timeline,
+              ),
+            if (news.domains.isNotEmpty)
+              SourcesView(
+                title: l10n.sources_title,
+                domains: news.domains,
+              ),
+            if (news.userActionItems.isNotEmpty)
+              _buildActionCard(context, l10n),
+            if (news.didYouKnow.isNotEmpty) _buildDidYouKNow(context, l10n),
             _shareNewsButton(context, l10n: l10n, news: news),
             _readArticleButton(context, l10n: l10n, news: news),
           ],
@@ -104,9 +93,10 @@ class NewsDetailScreen extends ConsumerWidget {
         RichText(
           text: TextSpan(
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                color: category.color),
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: category.color,
+            ),
             children: [
               const TextSpan(text: "• ", style: TextStyle(fontSize: 12)),
               TextSpan(text: category.name),
@@ -143,52 +133,95 @@ class NewsDetailScreen extends ConsumerWidget {
 
   Widget _buildScrollableItems(BuildContext context,
       {required List<String> images}) {
-    final imageViews = images.map((e) => _buildImageView(e)).toList();
-    return ScrollablePageView(views: imageViews, location: news.location);
+    return ScrollablePageView(
+      views: images.map(_buildImageView).toList(),
+      location: news.location,
+    );
   }
 
   Widget _buildContentText(BuildContext context,
       {required String title, required String content}) {
-    if (title.isEmpty || content.isEmpty) {
-      return const SizedBox.shrink();
-    }
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 16),
-          Text(content, style: Theme.of(context).textTheme.bodyMedium),
+          Text(
+            title,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            content,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildActionCards(AppLocalizations l10n, BuildContext context) {
+  Widget _buildContextSections(BuildContext context, AppLocalizations l10n) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildCard(
-          content: BulletPointsView(
-            title: l10n.action_items_title,
-            content: news.userActionItems,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.black),
+        if (news.geopoliticalContext.isNotEmpty)
+          _buildContentText(
+            context,
+            title: l10n.geopolitical_context_title,
+            content: news.geopoliticalContext,
           ),
-          color: actionGreen,
-        ),
-        _buildCard(
-          content: _buildContentText(context,
-              title: l10n.did_you_know_title, content: news.didYouKnow),
-          color: actionBlue,
-        ),
+        if (news.historicalBackground.isNotEmpty)
+          _buildContentText(
+            context,
+            title: l10n.historical_background_title,
+            content: news.historicalBackground,
+          ),
+        if (news.internationalReactions.isNotEmpty)
+          InternationalReactionsView(reactions: news.internationalReactions),
+        if (news.economicImplications.isNotEmpty)
+          _buildContentText(
+            context,
+            title: l10n.economic_implications_title,
+            content: news.economicImplications,
+          ),
+        if (news.humanitarianImpact.isNotEmpty)
+          _buildContentText(
+            context,
+            title: l10n.humanitarian_impact_title,
+            content: news.humanitarianImpact,
+          ),
       ],
+    );
+  }
+
+  Widget _buildActionCard(BuildContext context, AppLocalizations l10n) {
+    return _buildCard(
+      content: BulletPointsView(
+        title: l10n.action_items_title,
+        content: news.userActionItems,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium
+            ?.copyWith(color: Colors.black),
+      ),
+      color: Colors.green.shade100,
+    );
+  }
+
+  Widget _buildDidYouKNow(BuildContext context, AppLocalizations l10n) {
+    return _buildCard(
+      content: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: _buildContentText(
+          context,
+          title: l10n.did_you_know_title,
+          content: news.didYouKnow,
+        ),
+      ),
+      color: Colors.blue.shade100,
     );
   }
 
@@ -201,9 +234,7 @@ class NewsDetailScreen extends ConsumerWidget {
         child: OutlinedButton.icon(
           onPressed: () => Share.shareUri(Uri.parse(news.articles.first.link)),
           label: Text(l10n.share_news_button),
-          icon: const Icon(
-            Icons.share,
-          ),
+          icon: const Icon(Icons.share),
         ),
       ),
     );
@@ -218,9 +249,7 @@ class NewsDetailScreen extends ConsumerWidget {
         child: ElevatedButton.icon(
           onPressed: () => _showWebview(context, news.articles.first.link),
           label: Text(l10n.read_article_button),
-          icon: const Icon(
-            Icons.arrow_forward,
-          ),
+          icon: const Icon(Icons.arrow_forward),
           iconAlignment: IconAlignment.end,
         ),
       ),
@@ -229,15 +258,16 @@ class NewsDetailScreen extends ConsumerWidget {
 
   void _showWebview(BuildContext context, String url) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Webview(link: url)));
+      context,
+      MaterialPageRoute(builder: (context) => Webview(link: url)),
+    );
   }
 
   Widget _buildCard({required Widget content, Color? color}) {
     return Container(
       margin: const EdgeInsets.only(top: 16.0),
-      padding: const EdgeInsets.only(bottom: 16.0, right: 16.0, left: 16.0),
       decoration: BoxDecoration(
-        color: color ?? Colors.purple.withOpacity(0.5),
+        color: color ?? Colors.purple.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: content,

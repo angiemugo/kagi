@@ -32,7 +32,7 @@ class QuoteSectionWidget extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium
-                ?.copyWith(color: Colors.grey),
+                ?.copyWith(color: Colors.black.withOpacity(0.4)),
             textAlign: TextAlign.start,
           ),
           const SizedBox(height: 8),

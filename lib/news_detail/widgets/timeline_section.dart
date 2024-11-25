@@ -26,11 +26,7 @@ class TimelineSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final events = _extractEvents(timeline);
-
-    if (events.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
+    
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Column(
@@ -126,7 +122,7 @@ class TimelineSection extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                eventDate ?? "",
+                eventDate,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium
