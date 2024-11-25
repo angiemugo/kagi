@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class NewsModel {
   final String category;
   final int timestamp;
@@ -123,7 +125,7 @@ class Cluster {
       try {
         return decode();
       } catch (e) {
-        print('Error decoding field "$key": $e');
+        debugPrint('Error decoding field "$key": $e');
         rethrow;
       }
     }

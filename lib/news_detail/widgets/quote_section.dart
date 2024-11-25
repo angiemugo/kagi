@@ -36,7 +36,7 @@ class QuoteSectionWidget extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           const SizedBox(height: 8),
-          WebButton(url: news.quoteSourceDomain),
+          WebButton(name: news.quoteSourceDomain,url: news.quoteSourceUrl,),
         ],
       ),
     );

@@ -149,7 +149,8 @@ class NewsDetailScreen extends ConsumerWidget {
         children: [
           Text(
             title,
-            style: style?.copyWith(fontWeight: FontWeight.bold),
+            style: style
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(

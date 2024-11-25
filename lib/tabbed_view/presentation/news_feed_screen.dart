@@ -120,7 +120,7 @@ class NewsFeedScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             InkWell(
-              onTap: () => print("typed"),
+              onTap: () => debugPrint("Clicked on Share"),
               child: Icon(
                 Icons.share,
                 size: 14,
@@ -131,7 +131,7 @@ class NewsFeedScreen extends StatelessWidget {
               width: 12,
             ),
             InkWell(
-              onTap: () => print("typed"),
+              onTap: () => debugPrint("CLicked on Select"),
               child: Icon(
                 Icons.check_circle,
                 size: 14,

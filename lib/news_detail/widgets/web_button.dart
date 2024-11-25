@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:kagi_task/news_detail/widgets/webview.dart';
 
 class WebButton extends StatelessWidget {
-  final String url;
-  final String? favIcon; // URL for favicon (optional)
+  final String name;
+  final String? url;
+  final String? favIcon;
 
   const WebButton({
     super.key,
-    required this.url,
+    required this.name,
+    this.url,
     this.favIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _showWebview(context, url),
+      onTap: url != null && url!.isNotEmpty
+          ? () => _showWebview(context, url!)
+          : null,
       borderRadius: BorderRadius.circular(14),
       splashColor: Colors.blue.withOpacity(0.2),
       child: Container(
@@ -37,7 +41,7 @@ class WebButton extends StatelessWidget {
                     Icons.language,
                     color: Colors.blue,
                     size: 14,
-                  ), // Fallback icon if favicon fails to load
+                  ),
                 ),
               )
             else
@@ -49,12 +53,12 @@ class WebButton extends StatelessWidget {
             const SizedBox(width: 4),
             Flexible(
               child: Text(
-                url,
+                name,
                 style: const TextStyle(
                   color: Colors.blue,
                   fontSize: 12,
                 ),
-                overflow: TextOverflow.ellipsis, // Handle long URLs gracefully
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

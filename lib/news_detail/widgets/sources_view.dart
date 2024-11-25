@@ -65,7 +65,7 @@ class _SourcesViewState extends State<SourcesView> {
           children: displayedDomains.map(
             (entry) {
               return WebButton(
-                url: entry.name,
+                name: entry.name,
                 favIcon: entry.favIcon,
               );
             },

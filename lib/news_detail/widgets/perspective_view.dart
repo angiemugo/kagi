@@ -91,7 +91,7 @@ class PerspectiveView extends StatelessWidget {
             spacing: 4.0,
             runSpacing: 4.0,
             children: domains.map((url) {
-              return WebButton(url: url.name);
+              return WebButton(name: url.name, url: url.url);
             }).toList(),
           ),
         ],
