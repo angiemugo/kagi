@@ -30,6 +30,7 @@ class AppDecorations extends ThemeExtension<AppDecorations> {
     quoteBox: BoxDecoration(
       color: quoteBlueDark,
       borderRadius: BorderRadius.circular(8),
+ 
     ),
   );
 }

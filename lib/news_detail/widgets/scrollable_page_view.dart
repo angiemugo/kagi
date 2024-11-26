@@ -27,6 +27,7 @@ class ScrollablePageView extends ConsumerWidget {
           const SizedBox(height: 8),
           _buildDotsIndicator(context, currentPage),
           const SizedBox(height: 8),
+                  if (location.isNotEmpty)
           _buildLocationRow(location),
         ],
       ),

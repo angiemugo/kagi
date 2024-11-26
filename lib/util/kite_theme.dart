@@ -9,12 +9,12 @@ class KiteTheme {
       brightness: Brightness.light,
       scaffoldBackgroundColor: Colors.white,
       colorScheme: const ColorScheme.light(
-        primary: Colors.blue,
         secondary: actionGrey,
-        surface: Colors.grey,
         onPrimary: Colors.white,
-        onSecondary: Colors.black,
         onSurface: Colors.black,
+      ),
+        iconTheme: const IconThemeData(
+        color: Colors.grey,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
@@ -26,7 +26,7 @@ class KiteTheme {
           color: Colors.black,
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.grey,
         ),
       ),
       unselectedWidgetColor: Colors.grey,
@@ -39,6 +39,7 @@ class KiteTheme {
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
+          
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -52,13 +53,7 @@ class KiteTheme {
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           textStyle: const TextStyle(
               fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
         ),
-      ),
-      iconTheme: const IconThemeData(
-        color: Colors.black,
       ),
       extensions: [AppDecorations.light],
       textTheme: TextTheme(
@@ -88,12 +83,9 @@ class KiteTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       scaffoldBackgroundColor: Colors.black,
-      colorScheme: ColorScheme.dark(
-        primary: Colors.blue,
+      colorScheme: const ColorScheme.dark(
         secondary: actionGreyDark,
-        surface: Colors.grey[900] ?? Colors.black,
         onPrimary: Colors.black,
-        onSecondary: Colors.white,
         onSurface: Colors.white,
       ),
       appBarTheme: const AppBarTheme(
@@ -106,7 +98,7 @@ class KiteTheme {
           color: Colors.white,
         ),
         iconTheme: IconThemeData(
-          color: Colors.white,
+          color: Colors.grey,
         ),
       ),
       unselectedWidgetColor: Colors.grey,
@@ -132,13 +124,10 @@ class KiteTheme {
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           textStyle: const TextStyle(
               fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
         ),
       ),
       iconTheme: const IconThemeData(
-        color: Colors.white,
+        color: Colors.grey,
       ),
       extensions: [AppDecorations.dark],
       textTheme: TextTheme(

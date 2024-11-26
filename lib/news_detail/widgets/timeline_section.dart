@@ -94,7 +94,7 @@ class TimelineSection extends StatelessWidget {
       ),
       child: Text(
         "${index + 1}",
-        style: Theme.of(context).textTheme.bodyMedium
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white)
       ),
     );
   }

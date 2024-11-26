@@ -58,9 +58,9 @@ class _SourcesViewState extends State<SourcesView> {
       child: Row(
         children: [
           Text(
-            _isExpanded ? l10n.show_less : l10n.show_all,
+            _isExpanded ? l10n.show_less : l10n.show_all, style: Theme.of(context).textTheme.bodySmall,
           ),
-          Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
+          Icon(_isExpanded ? Icons.expand_less : Icons.expand_more, color: Theme.of(context).iconTheme.color,),
         ],
       ),
     );

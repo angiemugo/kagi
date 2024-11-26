@@ -77,7 +77,7 @@ class PerspectiveView extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 120),
       padding: const EdgeInsets.all(12.0),
       decoration: decorations?.quoteBox?.copyWith(
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+        color: Theme.of(context).colorScheme.secondary,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
