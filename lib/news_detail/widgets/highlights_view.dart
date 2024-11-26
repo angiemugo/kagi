@@ -22,68 +22,99 @@ class HighlightsView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: style?.copyWith(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
+          _buildTitle(),
           const SizedBox(height: 8),
           const DashedLine(),
           const SizedBox(height: 8),
-          ...content.asMap().entries.map(
-            (entry) {
-              final index = entry.key;
-              final point = entry.value;
-              return buildNumberedPoint(
-                index: index,
-                text: point,
-              );
-            },
-          ),
+          ..._buildNumberedPoints(),
         ],
       ),
     );
   }
 
-  Widget buildNumberedPoint({required int index, required String text}) {
-    final pointTitle = text.splitOrExtract();
-    final title = pointTitle!['title']!;
-    final content = pointTitle['content']!;
+  Widget _buildTitle() {
+    return Text(
+      title,
+      style: style?.copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+    );
+  }
+
+  List<Widget> _buildNumberedPoints() {
+    return content.asMap().entries.map(
+      (entry) {
+        final index = entry.key;
+        final point = entry.value;
+        return _NumberedPoint(
+          index: index,
+          text: point,
+          style: style,
+        );
+      },
+    ).toList();
+  }
+}
+
+class _NumberedPoint extends StatelessWidget {
+  final int index;
+  final String text;
+  final TextStyle? style;
+
+  const _NumberedPoint({
+    required this.index,
+    required this.text,
+    required this.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final pointParts = text.splitOrExtract();
+    final title = pointParts?['title'] ?? '';
+    final content = pointParts?['content'] ?? '';
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Container(
-              width: 20,
-              height: 20,
-              decoration: const BoxDecoration(
-                color: actionOrange,
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                '${index + 1}',
-                style: style?.copyWith(color: Colors.black, fontSize: 12),
-              ),
-            ),
-            const SizedBox(width: 8),
-            if (title.isNotEmpty)
-              Text(
-                title,
-                style: style?.copyWith(fontWeight: FontWeight.bold),
-              ),
-          ]),
-          const SizedBox(
-            height: 8,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildCircleNumber(),
+              const SizedBox(width: 8),
+              if (title.isNotEmpty)
+                Expanded(
+                  child: Text(
+                    title,
+                    style: style?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+            ],
           ),
+          const SizedBox(height: 8),
           if (content.isNotEmpty)
             Text(
               content,
               style: style,
             ),
-          const DashedLine()
+          const SizedBox(height: 8),
+          const DashedLine(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCircleNumber() {
+    return Container(
+      width: 20,
+      height: 20,
+      decoration: const BoxDecoration(
+        color: actionOrange,
+        shape: BoxShape.circle,
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        '${index + 1}',
+        style: style?.copyWith(color: Colors.black, fontSize: 12),
       ),
     );
   }

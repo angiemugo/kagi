@@ -1,51 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:kagi_task/tabbed_view/presentation/tabbed_news_controller.dart';
 
 class DrawerView extends StatelessWidget {
-  final List<Map<String, dynamic>> sections;
+  final List<String> settings;
+  final List<Category> categories;
 
-  const DrawerView({super.key, required this.sections});
+  const DrawerView({
+    super.key,
+    required this.settings,
+    required this.categories,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView.builder(
-        itemCount: sections.length,
-        itemBuilder: (context, sectionIndex) {
-          final section = sections[sectionIndex];
-          final sectionTitle = section['title'] as String;
-          final sectionItems = section['data'] as List<dynamic>;
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    final combinedItems = <Widget>[
+      ...settings.map((setting) => ListTile(title: Text(setting))),
+      const SizedBox(height: 32,),
+      ...categories.map((category) {
+        return ListTile(
+          title: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  sectionTitle,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: sectionItems.length,
-                separatorBuilder: (context, index) =>
-                    const Divider(indent: 16, endIndent: 16),
-                itemBuilder: (context, index) {
-                  final item = sectionItems[index];
-                  return ListTile(
-                    dense: true,
-                    title: Text(item.toString()),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  );
-                },
+              Text(category.name),
+              const SizedBox(width: 4,),
+              Text(
+                "${category.itemNumber}",
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
-          );
+          ),
+        );
+      }),
+    ];
+
+    return Drawer(
+      child: ListView.separated(
+        itemCount: combinedItems.length,
+        separatorBuilder: (context, index) => const Divider(
+          indent: 16,
+          endIndent: 16,
+        ),
+        itemBuilder: (context, index) {
+          return combinedItems[index];
         },
       ),
     );

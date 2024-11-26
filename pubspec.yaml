@@ -32,5 +32,4 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-      - assets/data/news.json
       - assets/images/kite.png

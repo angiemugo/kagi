@@ -67,7 +67,7 @@ class TimelineSection extends StatelessWidget {
       children: [
         Column(
           children: [
-            _buildNumberWidget(index),
+            _buildNumberWidget(index, context),
             const SizedBox(
               height: 8.0,
             ),
@@ -82,7 +82,7 @@ class TimelineSection extends StatelessWidget {
     );
   }
 
-  Widget _buildNumberWidget(int index) {
+  Widget _buildNumberWidget(int index, BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 4),
       width: 20,
@@ -94,10 +94,7 @@ class TimelineSection extends StatelessWidget {
       ),
       child: Text(
         "${index + 1}",
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.bodyMedium
       ),
     );
   }

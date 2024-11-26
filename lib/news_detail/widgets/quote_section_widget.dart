@@ -23,22 +23,43 @@ class QuoteSectionWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.format_quote, size: 48),
+          _buildIcon(),
           const SizedBox(height: 8),
-          Text(news.quote, style: Theme.of(context).textTheme.bodyMedium),
+          _buildQuoteText(context),
           const SizedBox(height: 8),
-          Text(
-            "${quoteSource?["title"]}\n${quoteSource?["content"]}",
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.black.withOpacity(0.4)),
-            textAlign: TextAlign.start,
+          _buildQuoteAuthor(context, quoteSource),
+          const SizedBox(height: 8),
+          WebButton(
+            name: news.quoteSourceDomain,
+            url: news.quoteSourceUrl,
           ),
-          const SizedBox(height: 8),
-          WebButton(name: news.quoteSourceDomain,url: news.quoteSourceUrl,),
         ],
       ),
+    );
+  }
+
+  Widget _buildIcon() {
+    return const Icon(Icons.format_quote, size: 48);
+  }
+
+  Widget _buildQuoteText(BuildContext context) {
+    return Text(
+      news.quote,
+      style: Theme.of(context).textTheme.bodyMedium,
+    );
+  }
+
+  Widget _buildQuoteAuthor(BuildContext context, Map<String, String>? quoteSource) {
+    final title = quoteSource?["title"] ?? "";
+    final content = quoteSource?["content"] ?? "";
+
+    return Text(
+      "$title\n$content",
+      style: Theme.of(context)
+          .textTheme
+          .bodyMedium
+          ?.copyWith(color: Colors.black.withOpacity(0.4)),
+      textAlign: TextAlign.start,
     );
   }
 }

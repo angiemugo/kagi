@@ -24,33 +24,41 @@ class PerspectiveView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          _buildTitle(context),
           const SizedBox(height: 8),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: perspectives.map((perspective) {
-                final perspectiveText = perspective.text.splitOrExtract();
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: _buildPerspectiveCard(
-                    context,
-                    title: perspectiveText?["title"] ?? "",
-                    description: perspectiveText?["content"] ?? "",
-                    width: cardWidth,
-                    domains: perspective.sources,
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
+          _buildHorizontalScroll(context, cardWidth),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+
+  Widget _buildHorizontalScroll(BuildContext context, double cardWidth) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: perspectives.map((perspective) {
+          final perspectiveText = perspective.text.splitOrExtract();
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: _buildPerspectiveCard(
+              context,
+              title: perspectiveText?["title"] ?? "",
+              description: perspectiveText?["content"] ?? "",
+              width: cardWidth,
+              domains: perspective.sources,
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -68,34 +76,48 @@ class PerspectiveView extends StatelessWidget {
       width: width,
       constraints: const BoxConstraints(minHeight: 120),
       padding: const EdgeInsets.all(12.0),
-      decoration: decorations?.quoteBox?.copyWith(color: Theme.of(context).colorScheme.secondary),
+      decoration: decorations?.quoteBox?.copyWith(
+        color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
+          _buildCardTitle(context, title),
           const SizedBox(height: 4),
-          Text(
-            description,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          _buildCardDescription(context, description),
           const SizedBox(height: 8),
-          Wrap(
-            spacing: 4.0,
-            runSpacing: 4.0,
-            children: domains.map((url) {
-              return WebButton(name: url.name, url: url.url);
-            }).toList(),
-          ),
+          _buildSourceButtons(domains),
         ],
       ),
+    );
+  }
+
+  Widget _buildCardTitle(BuildContext context, String title) {
+    return Text(
+      title,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+
+  Widget _buildCardDescription(BuildContext context, String description) {
+    return Text(
+      description,
+      style: Theme.of(context).textTheme.bodyMedium,
+    );
+  }
+
+  Widget _buildSourceButtons(List<Source> domains) {
+    return Wrap(
+      spacing: 4.0,
+      runSpacing: 4.0,
+      children: domains.map((source) {
+        return WebButton(name: source.name, url: source.url);
+      }).toList(),
     );
   }
 }

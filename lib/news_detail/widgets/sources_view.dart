@@ -19,59 +19,71 @@ class _SourcesViewState extends State<SourcesView> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
     final displayedDomains =
         _isExpanded ? widget.domains : widget.domains.take(8).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (widget.domains.length > 8)
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _isExpanded = !_isExpanded;
-                    });
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        _isExpanded ? l10n.show_less : l10n.show_all,
-                      ),
-                      Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-        ),
-        Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
-          children: displayedDomains.map(
-            (entry) {
-              return WebButton(
-                name: entry.name,
-                favIcon: entry.favIcon,
-              );
-            },
-          ).toList(),
-        ),
+        _buildHeader(context, l10n),
+        _buildDomainList(displayedDomains),
       ],
+    );
+  }
+
+  Widget _buildHeader(BuildContext context, AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            widget.title,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          if (widget.domains.length > 8) _buildExpandButton(l10n),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExpandButton(AppLocalizations l10n) {
+    return TextButton(
+      onPressed: _toggleExpanded,
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.black,
+      ),
+      child: Row(
+        children: [
+          Text(
+            _isExpanded ? l10n.show_less : l10n.show_all,
+          ),
+          Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
+        ],
+      ),
+    );
+  }
+
+  void _toggleExpanded() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
+  }
+
+  Widget _buildDomainList(List<Domain> displayedDomains) {
+    return Wrap(
+      spacing: 8.0,
+      runSpacing: 8.0,
+      children: displayedDomains
+          .map(
+            (entry) => WebButton(
+              name: entry.name,
+              favIcon: entry.favIcon,
+            ),
+          )
+          .toList(),
     );
   }
 }

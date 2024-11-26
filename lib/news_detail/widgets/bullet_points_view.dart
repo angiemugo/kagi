@@ -5,36 +5,47 @@ class BulletPointsView extends StatelessWidget {
   final List<String> content;
   final TextStyle? style;
 
-  const BulletPointsView(
-      {super.key, required this.title, required this.content, required this.style});
+  const BulletPointsView({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.style,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: style?.copyWith(fontWeight: FontWeight.bold)),
+          Text(
+            title,
+            style: style?.copyWith(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 8),
           ...content.map(
-            (point) => Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: RichText(
-                text: TextSpan(
-                  style: style,
-                  children: [
-                    TextSpan(
-                        text: "• ",
-                        style: style?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text: point,
-                    ),
-                  ],
-                ),
-              ),
+            (point) => _buildBulletPoint(point),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBulletPoint(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "• ",
+            style: style?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          Expanded(
+            child: Text(
+              text,
+              style: style,
             ),
           ),
         ],

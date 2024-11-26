@@ -10,14 +10,27 @@ part 'tabbed_news_controller.g.dart';
 class Category {
   final String name;
   final Color color;
+  final int itemNumber;
 
-  Category({required this.name, required this.color});
+  Category({required this.name, required this.color, required this.itemNumber});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is Category && other.name == name;
+  }
+
+  Category copyWith({
+    String? name,
+    Color? color,
+    int? itemNumber,
+  }) {
+    return Category(
+      name: name ?? this.name,
+      color: color ?? this.color,
+      itemNumber: itemNumber ?? this.itemNumber,
+    );
   }
 
   @override
@@ -74,30 +87,42 @@ class TabbedNewsController extends _$TabbedNewsController {
     }
   }
 
-  Map<Category, List<Cluster>> _groupByCategory(NewsModel newsModel) {
-    final Map<Category, List<Cluster>> grouped = {};
+Map<Category, List<Cluster>> _groupByCategory(NewsModel newsModel) {
+  final Map<Category, List<Cluster>> grouped = {};
 
-    for (var cluster in newsModel.clusters) {
-      var category = grouped.keys.firstWhere(
-        (existingCategory) => existingCategory.name == cluster.category,
-        orElse: () =>
-            Category(name: cluster.category, color: _getRandomColor()),
-      );
+  for (var cluster in newsModel.clusters) {
+    var category = grouped.keys.firstWhere(
+      (existingCategory) => existingCategory.name == cluster.category,
+      orElse: () {
+        final newCategory =
+            Category(name: cluster.category, color: _getRandomColor(), itemNumber: 0);
+        grouped[newCategory] = [];
+        return newCategory;
+      },
+    );
 
-      if (!grouped.containsKey(category)) {
-        grouped[category] = [];
-      }
+    grouped[category]!.add(cluster);
 
-      grouped[category]!.add(cluster);
+    final updatedCategory = category.copyWith(itemNumber: grouped[category]!.length);
+
+    if (grouped.containsKey(category)) {
+      final clusters = grouped.remove(category)!;
+      grouped[updatedCategory] = clusters;
     }
-
-    _categories = [
-      Category(name: "World", color: Colors.black),
-      ...grouped.keys,
-    ];
-
-    return grouped;
   }
+
+  _categories = [
+    Category(
+        name: "World",
+        color: Colors.black,
+        itemNumber: newsModel.clusters.length),
+    ...grouped.keys,
+  ];
+
+  return grouped;
+}
+
+
 
   List<Cluster> getCategory(Category category) {
     if (category.name == "World") {
@@ -115,14 +140,8 @@ class TabbedNewsController extends _$TabbedNewsController {
     return formattedDate;
   }
 
-  List<Map<String, dynamic>> getDrawerSections(NewsModel newsModel) {
-    final generalItems = ["Account", "Settings", "Interest", "Order"];
-
-    return [
-      {"title": "General", "data": generalItems},
-      {"title": "", "data": categories.map((c) => c.name).toList()}
-    ];
-  }
+  List<String> get generalSettings =>
+      ["Account", "Settings", "Interest", "Order"];
 
   int get currentTabIndex => _currentTabIndex;
 

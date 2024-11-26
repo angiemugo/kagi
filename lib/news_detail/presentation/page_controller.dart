@@ -5,11 +5,12 @@ final pageControllerProvider =
     StateNotifierProvider<PageControllerNotifier, int>((ref) {
   return PageControllerNotifier();
 });
-
 class PageControllerNotifier extends StateNotifier<int> {
-  final PageController controller = PageController();
+  final PageController controller;
 
-  PageControllerNotifier() : super(0);
+  PageControllerNotifier() 
+      : controller = PageController(),
+        super(0);
 
   void setCurrentPage(int index) {
     state = index;
