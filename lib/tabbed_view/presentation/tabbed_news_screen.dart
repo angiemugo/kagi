@@ -84,7 +84,7 @@ class TabbedNewsScreen extends ConsumerWidget {
             ),
            Text(
               'Kite',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black, fontWeight: FontWeight.bold)
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)
             ),
           ],
         ),
